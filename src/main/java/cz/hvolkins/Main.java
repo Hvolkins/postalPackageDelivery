@@ -25,9 +25,11 @@ import java.util.*;
 public class Main {
 
     private static PackageMemory memory = PackageMemory.getInstance();
+    private static DataPrinter printer = new DataPrinter();
+    private static DataValidator validator = new DataValidator();
 
     public static void main(String[] args) {
-        setHelpMenu();
+        printer.printHelpMenu();
 
         FileUtil fileUtil = new FileUtil();
         Scanner scanner = new Scanner(System.in).useLocale(Locale.ENGLISH);
@@ -97,14 +99,12 @@ public class Main {
     /**
      * Writes output to console one per minute
      */
-    private static void printDataEveryMinute() {
+    private static synchronized void printDataEveryMinute() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Printing data from memory..");
-                memory.printAllData();
-                System.out.println(MessageConstants.ENTER_MENU_PARAMETER);
+                printer.printAllData();
             }
         }, 0, 60*1000);//wait 0 ms before doing the action and do it every 60 000ms (1 minute)
 
@@ -117,24 +117,16 @@ public class Main {
      */
     private static void addNewPackage(Scanner scanner) {
         System.out.println("Enter package (<weight> <postal code>, for example 56.123 41501): ");
-        // Package validation
-        PostalPackage pcg = new DataValidator().valid(scanner);
-        if (null != pcg) {
+
+        double weight = validator.validWeight(scanner.nextDouble());
+        String postalCode = validator.validPostalCode(scanner.next());
+
+        if (postalCode != null) {
+            PostalPackage pcg = new PostalPackage(weight, postalCode);
             // Package saving in memory
             PostalPackage savedPcg = memory.save(pcg);
             // Print to console info about added package
-            memory.printPackageInfo(savedPcg, false);
+            printer.printPackageInfo(savedPcg, false);
         }
-    }
-
-    /**
-     * Prints help menu in console
-     */
-    private static void setHelpMenu() {
-        System.out.println("Package delivery tool:");
-        System.out.println("-n, -new	Enter the new package ");
-        System.out.println("-i, -init	Read packages from file");
-        System.out.println("-f, -file	Read fees from file");
-        System.out.println("-q, -quit	Exit from tool");
     }
 }

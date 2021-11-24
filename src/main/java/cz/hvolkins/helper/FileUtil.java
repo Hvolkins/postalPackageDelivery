@@ -25,6 +25,8 @@ public class FileUtil {
      * @see PostalPackage
      */
     public List<PostalPackage> readInitialFile(Scanner scanner) {
+        DataValidator validator = new DataValidator();
+
         System.out.println(MessageConstants.ENTER_FILE_NAME);
         String name = scanner.nextLine();
 
@@ -45,8 +47,13 @@ public class FileUtil {
                     List<String> fields = Stream.of(line.split(" ", -1)).collect(Collectors.toList());
                     if (!fields.isEmpty()) {
                         // Creating new package with data read from file
-                        PostalPackage pcg = new PostalPackage(Double.valueOf(fields.get(0).trim()), Integer.valueOf(fields.get(1).trim()));
-                        list.add(pcg);
+                        double weight = validator.validWeight(Double.valueOf(fields.get(0).trim()));
+                        String postalCode = validator.validPostalCode(fields.get(1).trim());
+
+                        if (postalCode != null) {
+                            PostalPackage pcg = new PostalPackage(weight, postalCode);
+                            list.add(pcg);
+                        }
                     }
                 }
                 System.out.println(MessageConstants.DATA_FROM_FILE);

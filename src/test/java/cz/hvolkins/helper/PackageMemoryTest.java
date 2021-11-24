@@ -25,9 +25,9 @@ class PackageMemoryTest {
     static void setUp() {
         pcgMemory = PackageMemory.getInstance();
 
-        map.put(1L, new PostalPackage(1L, 13.4, null, Integer.valueOf("08801")));
-        map.put(2L, new PostalPackage(2L, 2.0, null, Integer.valueOf("90005")));
-        map.put(3L, new PostalPackage(3L, 12.56, null, Integer.valueOf("32479")));
+        map.put(1L, new PostalPackage(1L, 13.4, null, "08801"));
+        map.put(2L, new PostalPackage(2L, 2.0, null, "90005"));
+        map.put(3L, new PostalPackage(3L, 12.56, null, "32479"));
     }
 
     @Test
@@ -41,8 +41,8 @@ class PackageMemoryTest {
     @Test
     @DisplayName("Adding postal package")
     void save() {
-        Long index = Long.valueOf(pcgMemory.getAllPackages().size() + 1);
-        int postalCode = Integer.parseInt("41501");
+        Long index = Long.valueOf(pcgMemory.getAllPackages().size()) + 1;
+        String postalCode = "41501";
         PostalPackage pp = new PostalPackage(index, 12.56, null, postalCode);
         pcgMemory.save(pp);
 

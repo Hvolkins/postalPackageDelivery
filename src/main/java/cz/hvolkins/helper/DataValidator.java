@@ -1,29 +1,34 @@
 package cz.hvolkins.helper;
 
-import cz.hvolkins.model.PostalPackage;
-
-import java.util.Scanner;
-
 /**
  * Validation of input data for package (weight and postal code)
  *
  * @author Elena Hvolkova
  */
 public class DataValidator {
+    /**
+     * Returns absolute value (create positive number from negative)
+     * @param weight of postal package
+     * @return absolute value of package weight
+     */
+    public Double validWeight(Double weight) {
+        return Math.abs(weight);
+    }
 
-    public PostalPackage valid(Scanner scanner) {
-        boolean isValid = true;
-        // Returns absolute value (create positive number from negative)
-        double weight = Math.abs(scanner.nextDouble());
+    /**
+     * Returns absolute value with control value on length (must be 5 digits)
+     * @param postalCode value from input or file
+     * @return valid postal code
+     */
+    public String validPostalCode(String postalCode) {
+        postalCode = postalCode.replace("-", "");
+        int iLength = postalCode.length();
 
-        int postalCode = Math.abs(scanner.nextInt());
-        int length = String.valueOf(postalCode).length();
-
-        // Controls if postal code has 5 digits
-        if (length != 5) {
-            System.out.println("Postal code must has 5 digits! For example 41501");
-            isValid = false;
+        if (iLength < 5) {
+            new DataPrinter().printValidError();
+        } else if (iLength > 5) {
+            postalCode = postalCode.substring(0,5);
         }
-        return isValid ? new PostalPackage(weight, postalCode) : null;
+        return postalCode;
     }
 }

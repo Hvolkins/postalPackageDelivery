@@ -17,6 +17,7 @@ import java.util.stream.Stream;
  * @author Elena Hvolková
  */
 public class FileUtil {
+    private final DataPrinter printer = new DataPrinter();
     /**
      * Import initial data about packages.
      *
@@ -27,11 +28,11 @@ public class FileUtil {
     public List<PostalPackage> readInitialFile(Scanner scanner) {
         DataValidator validator = new DataValidator();
 
-        System.out.println(MessageConstants.ENTER_FILE_NAME);
+        printer.print(MessageConstants.ENTER_FILE_NAME);
         String name = scanner.nextLine();
 
         File file = new File(name);
-        System.out.println("File exist - " + file.exists());
+        printer.print("File exist - " + file.exists());
 
         List<PostalPackage> list = new ArrayList<>();
 
@@ -56,8 +57,8 @@ public class FileUtil {
                         }
                     }
                 }
-                System.out.println(MessageConstants.DATA_FROM_FILE);
-                System.out.println(MessageConstants.ENTER_MENU_PARAMETER);
+                printer.print(MessageConstants.DATA_FROM_FILE);
+                printer.print(MessageConstants.ENTER_MENU_PARAMETER);
                 // Close the Scanner object attached to the file
                 inFile.close();
             } catch (FileNotFoundException e) {
@@ -75,11 +76,11 @@ public class FileUtil {
      * @see Fee
      */
     public List<Fee> readFeesFromFile(Scanner scanner) {
-        System.out.println(MessageConstants.ENTER_FILE_NAME);
+        printer.print(MessageConstants.ENTER_FILE_NAME);
         String name = scanner.nextLine();
 
         File file = new File(name);
-        System.out.println("File exist - " + file.exists());
+        printer.print("File exist - " + file.exists());
 
         List<Fee> list = new ArrayList<>();
 
@@ -95,8 +96,8 @@ public class FileUtil {
                         list.add(fee);
                     }
                 }
-                System.out.println(MessageConstants.DATA_FROM_FILE);
-                System.out.println(MessageConstants.ENTER_MENU_PARAMETER);
+                printer.print(MessageConstants.DATA_FROM_FILE);
+                printer.print(MessageConstants.ENTER_MENU_PARAMETER);
                 inFile.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

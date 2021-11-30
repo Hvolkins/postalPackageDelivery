@@ -33,35 +33,39 @@ public class DataPrinter {
             // uses full message (with feels) for printing all data, for one package uses message without fee
             message = allPackages ? message + " "+fee : message;
         }
-        System.out.println(message);
+        print(message);
     }
 
     /**
      * Print all data from memory
      */
     public void printAllData() {
-        System.out.println("Printing data from memory..");
+        print("Printing data from memory..");
         if (!memory.getPackagesInMemory().isEmpty()) {
             memory.getPackagesInMemory().forEach((k, v) -> printPackageInfo(v, true));
         }
-        System.out.println(MessageConstants.ENTER_MENU_PARAMETER);
+        print(MessageConstants.ENTER_MENU_PARAMETER);
     }
 
     /**
      * Print validation message for postal code
      */
     public void printValidError() {
-        System.out.println("Postal code must has 5 digits! For example 41501");
+        print("Postal code must has 5 digits! For example 41501");
     }
 
     /**
      * Prints help menu in console
      */
     public void printHelpMenu() {
-        System.out.println("Package delivery tool:");
-        System.out.println("-n, -new	Enter the new package ");
-        System.out.println("-i, -init	Read packages from file");
-        System.out.println("-f, -file	Read fees from file");
-        System.out.println("-q, -quit	Exit from tool");
+        print("Package delivery tool:");
+        print("-n, -new	Enter the new package ");
+        print("-i, -init	Read packages from file");
+        print("-f, -file	Read fees from file");
+        print("-q, -quit	Exit from tool");
+    }
+
+    public void print(String message) {
+        System.out.println(message);
     }
 }

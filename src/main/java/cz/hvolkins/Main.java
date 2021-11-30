@@ -67,13 +67,13 @@ public class Main {
                             break;
                         }
                         case QUIT, QUIT_SHORT: {
-                            System.out.println("Exiting from Package delivery tool..");
+                            printer.print("Exiting from Package delivery tool..");
                             System.exit(0);
                             break;
                         }
                     }
                 } else
-                    System.out.println("Entered parameter is bad, see Package delivery tool!");
+                    printer.print("Entered parameter is bad, see Package delivery tool!");
             }
         }
     }
@@ -116,7 +116,7 @@ public class Main {
      * @param scanner scanner
      */
     private static void addNewPackage(Scanner scanner) {
-        System.out.println("Enter package (<weight> <postal code>, for example 56.123 41501): ");
+        printer.print("Enter package (<weight> <postal code>, for example 56.123 41501): ");
 
         double weight = validator.validWeight(scanner.nextDouble());
         String postalCode = validator.validPostalCode(scanner.next());
